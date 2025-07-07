@@ -14,10 +14,103 @@
 
         html, body {
             height: 100%; /* Ensure full height for footer positioning */
-            background: linear-gradient(135deg, #1a1a2e, #16213e);
-            color: #fff;
+            background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
+            color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
+            position: relative;
+            transition: all 0.5s ease;
+        }
+
+        /* CSS Variables for Day/Night Theme */
+        :root {
+            --bg-primary: #1a1a2e;
+            --bg-secondary: #16213e;
+            --bg-tertiary: #0f0f1e;
+            --accent-primary: #ffd700;
+            --accent-secondary: #ffed4a;
+            --text-primary: #ffffff;
+            --text-secondary: #e0e0e0;
+            --card-bg: rgba(255, 255, 255, 0.15);
+            --card-border: rgba(255, 215, 0, 0.3);
+            --shadow: rgba(0, 0, 0, 0.4);
+            --particle-color: rgba(255, 215, 0, 0.6);
+        }
+
+        [data-theme="day"] {
+            --bg-primary: linear-gradient(135deg, #87CEEB, #87CEFA);
+            --bg-secondary: #B0E0E6;
+            --bg-tertiary: #F0F8FF;
+            --accent-primary: #FF6B35;
+            --accent-secondary: #FF8C42;
+            --text-primary: #2C3E50;
+            --text-secondary: #34495E;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --card-border: rgba(255, 107, 53, 0.3);
+            --shadow: rgba(0, 0, 0, 0.1);
+            --particle-color: rgba(255, 107, 53, 0.6);
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px var(--shadow);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1) rotate(180deg);
+            box-shadow: 0 6px 20px var(--shadow);
+        }
+
+        /* Particle Background */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--particle-color);
+            border-radius: 50%;
+            animation: float-particle 6s infinite linear;
+        }
+
+        @keyframes float-particle {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
         }
 
         /* Wrapper to handle footer positioning */
@@ -33,18 +126,33 @@
 
         .header {
             text-align: center;
-            padding: 3rem 1rem; /* Increased padding for better spacing */
-            background: rgba(0, 0, 0, 0.7);
+            padding: 3rem 1rem;
+            background: var(--bg-tertiary);
+            background: linear-gradient(135deg, var(--bg-tertiary), transparent);
+            border-bottom: 1px solid var(--card-border);
         }
 
         .header img {
-            width: 180px; /* Slightly larger for better visibility */
+            width: 180px;
             height: 180px;
             border-radius: 50%;
-            border: 5px solid #ffd700;
+            border: 5px solid var(--accent-primary);
             margin-bottom: 1.5rem;
             animation: float 3s ease-in-out infinite;
-            object-fit: cover; /* Ensure image fits well */
+            object-fit: cover;
+            box-shadow: 0 0 30px var(--particle-color);
+            transition: all 0.3s ease;
+        }
+
+        .header img:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 40px var(--particle-color);
+            animation: float 3s ease-in-out infinite, pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 30px var(--particle-color); }
+            50% { box-shadow: 0 0 50px var(--particle-color); }
         }
 
         @keyframes float {
@@ -53,11 +161,22 @@
         }
 
         h1 {
-            font-size: 3rem; /* Larger for impact */
-            color: #ffd700;
+            font-size: 3rem;
+            color: var(--accent-primary);
             text-transform: uppercase;
             letter-spacing: 3px;
             font-weight: 600;
+            text-shadow: 0 0 10px var(--particle-color);
+            animation: titleGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { 
+                text-shadow: 0 0 10px var(--particle-color), 0 0 20px var(--particle-color);
+            }
+            50% { 
+                text-shadow: 0 0 20px var(--particle-color), 0 0 30px var(--particle-color);
+            }
         }
 
         .container {
@@ -71,25 +190,104 @@
         }
 
         .card {
-            background: rgba(255, 255, 255, 0.15); /* Slightly more opacity for better contrast */
+            background: var(--card-bg);
             padding: 2.5rem;
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 25px;
+            backdrop-filter: blur(20px);
+            transition: all 0.5s ease;
             width: 100%;
-            max-width: 500px; /* Larger cards for better readability */
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+            max-width: 500px;
+            box-shadow: 0 8px 32px var(--shadow);
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            border: 1px solid var(--card-border);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--card-border), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .card:hover::before {
+            left: 100%;
         }
 
         .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            transform: translateY(-20px) rotateX(8deg) rotateY(8deg);
+            box-shadow: 0 25px 50px var(--shadow);
+        }
+
+        /* Prayer Wall Styles */
+        .prayer-wall {
+            background: var(--card-border);
+            border: 2px solid var(--accent-primary);
+            max-height: 300px;
+            overflow-y: auto;
+            margin: 1rem 0;
+            padding: 1rem;
+            border-radius: 15px;
+        }
+
+        .prayer-item {
+            background: var(--card-bg);
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            border-radius: 10px;
+            border-left: 3px solid var(--accent-primary);
+            animation: slideIn 0.5s ease;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .prayer-form {
+            display: flex;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+
+        .prayer-form input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 1px solid var(--card-border);
+            border-radius: 25px;
+            background: var(--card-bg);
+            color: var(--text-primary);
+            backdrop-filter: blur(10px);
+        }
+
+        .prayer-form button {
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px var(--shadow);
+        }
+
+        .prayer-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px var(--shadow);
         }
 
         .card h2 {
             font-size: 1.8rem;
             margin-bottom: 1rem;
-            color: #ffd700;
+            color: var(--accent-primary);
+            text-shadow: 0 2px 4px var(--shadow);
         }
 
         .card p {
@@ -98,44 +296,51 @@
         }
 
         .quote-box {
-            background: #ffd700;
-            color: #1a1a2e;
+            background: var(--accent-primary);
+            color: var(--bg-primary);
             padding: 1.5rem;
-            border-radius: 10px;
+            border-radius: 15px;
             margin: 1rem 0;
             font-size: 1.1rem;
             font-style: italic;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px var(--particle-color);
+            border: 1px solid var(--accent-secondary);
         }
 
         .quote-box button {
-            background: #1a1a2e;
-            color: #fff;
+            background: var(--bg-primary);
+            color: var(--text-primary);
             border: none;
             padding: 0.75rem 1.5rem;
-            border-radius: 5px;
+            border-radius: 25px;
             cursor: pointer;
             margin-top: 1rem;
             font-size: 1rem;
-            transition: background 0.3s ease;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px var(--shadow);
         }
 
         .quote-box button:hover {
-            background: #2a2a4e;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px var(--shadow);
         }
 
         .chatbot {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            width: 400px; /* Slightly larger for better usability */
+            width: 400px;
             height: 500px;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
             display: none;
             flex-direction: column;
-            color: #1a1a2e;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            color: var(--text-primary);
+            box-shadow: 0 0 30px var(--shadow);
             z-index: 1000;
+            border: 1px solid var(--card-border);
         }
 
         .chatbot.active {
@@ -143,9 +348,9 @@
         }
 
         .chat-header {
-            background: #ffd700;
+            background: var(--accent-primary);
             padding: 1.5rem;
-            border-radius: 20px 20px 0 0;
+            border-radius: 25px 25px 0 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -153,17 +358,23 @@
 
         .chat-header h3 {
             font-size: 1.3rem;
+            color: var(--bg-primary);
         }
 
         .chat-header button {
-            background: #1a1a2e;
-            color: #fff;
+            background: var(--bg-primary);
+            color: var(--text-primary);
             border: none;
             width: 35px;
             height: 35px;
             border-radius: 50%;
             cursor: pointer;
             font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .chat-header button:hover {
+            transform: scale(1.1);
         }
 
         .chat-body {
@@ -175,7 +386,7 @@
 
         .chat-input {
             padding: 1.5rem;
-            border-top: 1px solid #ddd;
+            border-top: 1px solid var(--card-border);
             display: flex;
             gap: 10px;
         }
@@ -183,31 +394,36 @@
         .chat-input input {
             flex: 1;
             padding: 0.75rem;
-            border: none;
-            border-radius: 5px;
+            border: 1px solid var(--card-border);
+            border-radius: 25px;
             font-size: 1rem;
+            background: var(--card-bg);
+            color: var(--text-primary);
+            backdrop-filter: blur(10px);
         }
 
         .chat-input button {
-            background: #1a1a2e;
-            color: #fff;
+            background: var(--accent-primary);
+            color: var(--bg-primary);
             border: none;
             padding: 0.75rem 1.5rem;
-            border-radius: 5px;
+            border-radius: 25px;
             cursor: pointer;
             font-size: 1rem;
-            transition: background 0.3s ease;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px var(--shadow);
         }
 
         .chat-input button:hover {
-            background: #2a2a4e;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px var(--shadow);
         }
 
         .chat-btn {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background: #ffd700;
+            background: var(--accent-primary);
             width: 70px;
             height: 70px;
             border-radius: 50%;
@@ -215,47 +431,58 @@
             cursor: pointer;
             font-size: 2rem;
             z-index: 999;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
+            box-shadow: 0 8px 25px var(--shadow);
+            transition: all 0.3s ease;
+            color: var(--bg-primary);
         }
 
         .chat-btn:hover {
-            transform: scale(1.1);
+            transform: scale(1.15) rotate(5deg);
+            box-shadow: 0 12px 35px var(--shadow);
         }
 
         .social-links a {
             display: block;
-            color: #ffd700;
+            color: var(--accent-primary);
             text-decoration: none;
             margin: 0.75rem 0;
             font-size: 1.1rem;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
+            padding: 0.5rem;
+            border-radius: 10px;
+            text-shadow: 0 2px 4px var(--shadow);
         }
 
         .social-links a:hover {
-            color: #fff;
+            color: var(--text-primary);
+            transform: translateX(10px);
+            background: var(--card-border);
         }
 
         footer {
-            flex-shrink: 0; /* Prevent footer from shrinking */
+            flex-shrink: 0;
             text-align: center;
             padding: 1.5rem;
-            background: rgba(0, 0, 0, 0.7);
+            background: var(--bg-tertiary);
             width: 100%;
+            border-top: 1px solid var(--card-border);
         }
 
         footer p {
             font-size: 1rem;
+            color: var(--text-secondary);
         }
 
         footer a {
-            color: #ffd700;
+            color: var(--accent-primary);
             text-decoration: none;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
+            text-shadow: 0 2px 4px var(--shadow);
         }
 
         footer a:hover {
-            color: #fff;
+            color: var(--text-primary);
+            transform: scale(1.05);
         }
 
         /* Media Queries for Responsiveness */
@@ -302,6 +529,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Particle Background -->
+    <div class="particles" id="particles"></div>
+    
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">🌙</button>
+    
     <div class="wrapper">
         <div class="main-content">
             <header class="header">
@@ -326,9 +559,92 @@
                 <div class="card">
                     <h2>Connect With Us</h2>
                     <div class="social-links">
-                        <a href="https://www.tiktok.com/@propheleben?_t=ZT-8uqO2YNKmxK&_r=1" target="_blank">TikTok</a>
-                        <a href="https://m.youtube.com/@ebenezernaakutetteh" target="_blank">YouTube</a>
-                        <p>Donate via MoMo: +233 55 882 4807</p>
+                        <a href="https://www.tiktok.com/@propheleben?_t=ZT-8uqO2YNKmxK&_r=1" target="_blank">🎵 TikTok</a>
+                        <a href="https://m.youtube.com/@ebenezernaakutetteh" target="_blank">📺 YouTube</a>
+                        <p>💰 Donate via MoMo: +233 55 882 4807</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>🙏 Prayer Wall</h2>
+                    <p>Share your prayer requests with our community. We believe in the power of collective prayer!</p>
+                    <div class="prayer-wall" id="prayerWall">
+                        <div class="prayer-item">
+                            <strong>Anonymous:</strong> Please pray for my family's health and unity. 🙏
+                        </div>
+                        <div class="prayer-item">
+                            <strong>Faith:</strong> Requesting prayers for my job interview tomorrow. 💼
+                        </div>
+                        <div class="prayer-item">
+                            <strong>Hope:</strong> Pray for healing and strength during this difficult time. 💪
+                        </div>
+                    </div>
+                    <div class="prayer-form">
+                        <input type="text" id="prayerInput" placeholder="Share your prayer request...">
+                        <button onclick="submitPrayer()">Submit Prayer</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>✨ Miracle Stories</h2>
+                    <p>Experience the power of faith through real miracle testimonies shared by our community!</p>
+                    <div id="miracleContainer" style="position: relative; height: 200px; overflow: hidden; border-radius: 15px; background: var(--card-border); margin: 1rem 0;">
+                        <div class="miracle-story active" style="position: absolute; width: 100%; height: 100%; padding: 1.5rem; display: flex; flex-direction: column; justify-content: center; text-align: center; transition: transform 0.8s ease;">
+                            <div style="font-size: 1.1rem; font-style: italic; margin-bottom: 1rem; color: var(--text-primary);">
+                                "I was diagnosed with a terminal illness. After Prophet Ebenezer's prayer, my next medical test showed complete healing! The doctors called it a miracle!"
+                            </div>
+                            <div style="font-weight: bold; color: var(--accent-primary);">- Mary A., Accra</div>
+                        </div>
+                        <div class="miracle-story" style="position: absolute; width: 100%; height: 100%; padding: 1.5rem; display: flex; flex-direction: column; justify-content: center; text-align: center; transition: transform 0.8s ease; transform: translateX(100%);">
+                            <div style="font-size: 1.1rem; font-style: italic; margin-bottom: 1rem; color: var(--text-primary);">
+                                "My business was failing for 2 years. After the prophecy and prayer, I received the biggest contract of my life within a week! Glory to God!"
+                            </div>
+                            <div style="font-weight: bold; color: var(--accent-primary);">- Samuel O., Kumasi</div>
+                        </div>
+                        <div class="miracle-story" style="position: absolute; width: 100%; height: 100%; padding: 1.5rem; display: flex; flex-direction: column; justify-content: center; text-align: center; transition: transform 0.8s ease; transform: translateX(100%);">
+                            <div style="font-size: 1.1rem; font-style: italic; margin-bottom: 1rem; color: var(--text-primary);">
+                                "My marriage was on the verge of divorce. Through Prophet Ebenezer's guidance and prayer, we are now stronger than ever and expecting our first child!"
+                            </div>
+                            <div style="font-weight: bold; color: var(--accent-primary);">- Grace & John K., Tema</div>
+                        </div>
+                    </div>
+                    <div style="text-align: center; margin-top: 1rem;">
+                        <button onclick="nextMiracle()" style="background: var(--accent-primary); color: var(--bg-primary); border: none; padding: 0.8rem 1.5rem; border-radius: 25px; cursor: pointer; font-weight: bold; transition: all 0.3s ease;">
+                            Next Miracle 🙏
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>📖 Interactive Bible Verses</h2>
+                    <p>Search for Bible verses by keyword and get instant spiritual guidance!</p>
+                    <div style="margin: 1rem 0;">
+                        <input type="text" id="verseSearch" placeholder="Enter keyword (e.g., 'love', 'strength', 'hope')" style="width: 100%; padding: 0.8rem; border: 1px solid var(--card-border); border-radius: 25px; background: var(--card-bg); color: var(--text-primary); margin-bottom: 1rem; backdrop-filter: blur(10px);">
+                        <button onclick="searchVerse()" style="background: var(--accent-primary); color: var(--bg-primary); border: none; padding: 0.8rem 1.5rem; border-radius: 25px; cursor: pointer; font-weight: bold; width: 100%; transition: all 0.3s ease; box-shadow: 0 4px 10px var(--shadow);">Search Verses</button>
+                    </div>
+                    <div id="verseResult" style="background: var(--card-border); padding: 1rem; border-radius: 15px; border-left: 3px solid var(--accent-primary); font-style: italic; min-height: 60px; display: flex; align-items: center; justify-content: center; opacity: 0.7;">
+                        Enter a keyword to discover relevant Bible verses...
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>🌟 Testimonials</h2>
+                    <div id="testimonialCarousel" style="position: relative; overflow: hidden; height: 150px; border-radius: 15px; background: var(--card-border);">
+                        <div class="testimonial-slide active" style="padding: 1.5rem; position: absolute; width: 100%; transition: transform 0.5s ease;">
+                            <div style="font-style: italic; margin-bottom: 0.5rem;">"Prophet Ebenezer's words changed my life completely. The prophecies came to pass exactly as he said!"</div>
+                            <div style="font-weight: bold; color: var(--accent-primary);">- Sarah K.</div>
+                        </div>
+                        <div class="testimonial-slide" style="padding: 1.5rem; position: absolute; width: 100%; transition: transform 0.5s ease; transform: translateX(100%);">
+                            <div style="font-style: italic; margin-bottom: 0.5rem;">"Through this ministry, I found my purpose and calling. The guidance has been invaluable."</div>
+                            <div style="font-weight: bold; color: var(--accent-primary);">- Michael T.</div>
+                        </div>
+                        <div class="testimonial-slide" style="padding: 1.5rem; position: absolute; width: 100%; transition: transform 0.5s ease; transform: translateX(100%);">
+                            <div style="font-style: italic; margin-bottom: 0.5rem;">"My family was restored through the prayers and prophecies. We are forever grateful!"</div>
+                            <div style="font-weight: bold; color: var(--accent-primary);">- Grace M.</div>
+                        </div>
+                    </div>
+                    <div style="text-align: center; margin-top: 1rem;">
+                        <button onclick="nextTestimonial()" style="background: var(--accent-primary); color: var(--bg-primary); border: none; padding: 0.5rem 1rem; border-radius: 25px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 10px var(--shadow);">Next Testimony</button>
                     </div>
                 </div>
             </div>
@@ -355,18 +671,39 @@
     </div>
 
     <script>
-        // Dynamic Quote Generator for Unlimited Quotes
+        // Initialize particle system
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            
+            function createParticle() {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 6) + 's';
+                particlesContainer.appendChild(particle);
+                
+                setTimeout(() => {
+                    particle.remove();
+                }, 9000);
+            }
+            
+            // Create particles continuously
+            setInterval(createParticle, 300);
+        }
+
+        // Enhanced Dynamic Quote Generator
         const beginnings = [
-            "The Lord", "God", "Jesus", "Faith", "Love"
+            "The Lord", "God", "Jesus", "Faith", "Love", "Hope", "Grace", "His mercy", "Divine love", "The Almighty"
         ];
         const verbs = [
-            "guides", "strengthens", "lifts", "blesses", "renews"
+            "guides", "strengthens", "lifts", "blesses", "renews", "transforms", "heals", "protects", "empowers", "illuminates"
         ];
         const endings = [
-            "your spirit", "your heart", "your path", "your soul", "all things"
+            "your spirit", "your heart", "your path", "your soul", "all things", "your journey", "your dreams", "your purpose", "your destiny", "your life"
         ];
         const scriptures = [
-            " - Psalm 23:1", " - John 3:16", " - Philippians 4:13", " - Joshua 1:9", " - Romans 8:28"
+            " - Psalm 23:1", " - John 3:16", " - Philippians 4:13", " - Joshua 1:9", " - Romans 8:28", " - Isaiah 41:10", " - Jeremiah 29:11", " - Proverbs 3:5-6", " - Matthew 19:26", " - 2 Corinthians 5:17"
         ];
 
         let quoteInterval = null;
@@ -377,7 +714,14 @@
             const ending = endings[Math.floor(Math.random() * endings.length)];
             const scripture = scriptures[Math.floor(Math.random() * scriptures.length)];
             const quote = `${beginning} ${verb} ${ending}${scripture}`;
-            document.getElementById('quote').textContent = quote;
+            
+            const quoteElement = document.getElementById('quote');
+            quoteElement.style.opacity = '0';
+            
+            setTimeout(() => {
+                quoteElement.textContent = quote;
+                quoteElement.style.opacity = '1';
+            }, 300);
         }
 
         function startQuoteCycle() {
@@ -387,12 +731,130 @@
             }
         }
 
+        // Prayer Wall Functionality
+        function submitPrayer() {
+            const input = document.getElementById('prayerInput');
+            const prayer = input.value.trim();
+            if (!prayer) return;
+            
+            const prayerWall = document.getElementById('prayerWall');
+            const prayerItem = document.createElement('div');
+            prayerItem.className = 'prayer-item';
+            prayerItem.innerHTML = `<strong>Anonymous:</strong> ${prayer} 🙏`;
+            
+            prayerWall.insertBefore(prayerItem, prayerWall.firstChild);
+            input.value = '';
+            
+            // Keep only the latest 5 prayers visible
+            const prayers = prayerWall.querySelectorAll('.prayer-item');
+            if (prayers.length > 5) {
+                prayers[prayers.length - 1].remove();
+            }
+            
+            prayerWall.scrollTop = 0;
+        }
+
+        // Theme Toggle Functionality
+        function toggleTheme() {
+            const body = document.body;
+            const themeToggle = document.getElementById('themeToggle');
+            
+            if (body.getAttribute('data-theme') === 'day') {
+                body.removeAttribute('data-theme');
+                themeToggle.textContent = '🌙';
+                localStorage.setItem('theme', 'night');
+            } else {
+                body.setAttribute('data-theme', 'day');
+                themeToggle.textContent = '☀️';
+                localStorage.setItem('theme', 'day');
+            }
+        }
+
+        // Load saved theme
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            const body = document.body;
+            const themeToggle = document.getElementById('themeToggle');
+            
+            if (savedTheme === 'day') {
+                body.setAttribute('data-theme', 'day');
+                themeToggle.textContent = '☀️';
+            } else {
+                themeToggle.textContent = '🌙';
+            }
+        }
+
+        // Miracle Stories Functionality
+        let currentMiracle = 0;
+        const miracleStories = document.querySelectorAll('.miracle-story');
+
+        function nextMiracle() {
+            miracleStories[currentMiracle].style.transform = 'translateX(-100%)';
+            currentMiracle = (currentMiracle + 1) % miracleStories.length;
+            miracleStories[currentMiracle].style.transform = 'translateX(0)';
+        }
+
+        // Auto-rotate miracle stories
+        setInterval(nextMiracle, 8000);
+
+        // Bible Verse Search
+        const bibleVerses = {
+            love: ["For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life. - John 3:16", "Love is patient, love is kind. It does not envy, it does not boast, it is not proud. - 1 Corinthians 13:4"],
+            strength: ["I can do all this through him who gives me strength. - Philippians 4:13", "The Lord is my strength and my shield; my heart trusts in him, and he helps me. - Psalm 28:7"],
+            hope: ["For I know the plans I have for you, declares the Lord, plans to prosper you and not to harm you, to give you hope and a future. - Jeremiah 29:11", "May the God of hope fill you with all joy and peace as you trust in him. - Romans 15:13"],
+            peace: ["Peace I leave with you; my peace I give you. I do not give to you as the world gives. Do not let your hearts be troubled and do not be afraid. - John 14:27", "And the peace of God, which transcends all understanding, will guard your hearts and your minds in Christ Jesus. - Philippians 4:7"],
+            faith: ["Now faith is confidence in what we hope for and assurance about what we do not see. - Hebrews 11:1", "If you believe, you will receive whatever you ask for in prayer. - Matthew 21:22"],
+            healing: ["He heals the brokenhearted and binds up their wounds. - Psalm 147:3", "But he was pierced for our transgressions, he was crushed for our iniquities; the punishment that brought us peace was on him, and by his wounds we are healed. - Isaiah 53:5"],
+            courage: ["Have I not commanded you? Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go. - Joshua 1:9", "Be strong and courageous. Do not be afraid or terrified because of them, for the Lord your God goes with you; he will never leave you nor forsake you. - Deuteronomy 31:6"],
+            wisdom: ["If any of you lacks wisdom, you should ask God, who gives generously to all without finding fault, and it will be given to you. - James 1:5", "The fear of the Lord is the beginning of wisdom; all who follow his precepts have good understanding. - Psalm 111:10"]
+        };
+
+        function searchVerse() {
+            const input = document.getElementById('verseSearch');
+            const keyword = input.value.toLowerCase().trim();
+            const resultDiv = document.getElementById('verseResult');
+            
+            if (!keyword) {
+                resultDiv.innerHTML = 'Please enter a keyword to search...';
+                return;
+            }
+            
+            const verses = bibleVerses[keyword];
+            if (verses) {
+                const randomVerse = verses[Math.floor(Math.random() * verses.length)];
+                resultDiv.innerHTML = `<strong>📖 "${randomVerse}"</strong>`;
+                resultDiv.style.opacity = '1';
+            } else {
+                resultDiv.innerHTML = `<em>No verses found for "${keyword}". Try keywords like: love, strength, hope, peace, faith, healing, courage, wisdom</em>`;
+                resultDiv.style.opacity = '0.7';
+            }
+        }
+
+        // Testimonial Carousel
+        let currentTestimonial = 0;
+        const testimonials = document.querySelectorAll('.testimonial-slide');
+
+        function nextTestimonial() {
+            testimonials[currentTestimonial].style.transform = 'translateX(-100%)';
+            currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+            testimonials[currentTestimonial].style.transform = 'translateX(0)';
+        }
+
+        // Auto-rotate testimonials
+        setInterval(nextTestimonial, 5000);
+
+        // Enhanced Chatbot
         const responses = {
-            "hello": "Greetings in the name of the Lord! How can I assist you?",
-            "prayer": "Would you like a short prayer? Here's one: May the peace of God fill your heart today.",
-            "service": "For service times and personal consultations, please message Prophet Ebenezer on WhatsApp at +233 55 882 4807.",
-            "who": "Prophet Ebenezer Tetteh is an anointed servant of God. Check out his teachings on TikTok: @propheleben",
-            "default": "For more personal guidance, please contact Prophet Ebenezer on WhatsApp at +233 55 882 4807 or follow him on TikTok @propheleben."
+            "hello": "🙏 Greetings in the name of the Lord! I'm here to assist you on your spiritual journey. How can I help you today?",
+            "prayer": "🙏 Would you like a personalized prayer? Here's one for you: 'May the Lord bless you and keep you; may the Lord make his face shine on you and be gracious to you. May the Lord turn his face toward you and give you peace.' - Numbers 6:24-26",
+            "service": "⛪ For service times and personal consultations, please message Prophet Ebenezer on WhatsApp at +233 55 882 4807. He offers personal prophecies and spiritual guidance!",
+            "who": "✨ Prophet Ebenezer Tetteh is an anointed servant of God with a powerful gift of prophecy. Follow his teachings on TikTok: @propheleben for daily inspiration!",
+            "blessing": "🌟 May God's abundant blessings overflow in your life today! 'The Lord bless you and keep you; the Lord make his face shine on you.' - Numbers 6:24",
+            "help": "💫 I can help you with prayers, Bible verses, information about Prophet Ebenezer, service times, and spiritual guidance. What would you like to know?",
+            "prophecy": "🔮 Prophet Ebenezer has a special gift of prophecy. For personal prophecies and spiritual readings, please contact him directly on WhatsApp at +233 55 882 4807.",
+            "donate": "💰 Your generous donations help spread God's word! You can donate via MoMo to +233 55 882 4807. Every contribution makes a difference!",
+            "verse": "📖 Here's a powerful verse for you: 'And we know that in all things God works for the good of those who love him, who have been called according to his purpose.' - Romans 8:28",
+            "default": "✨ For more personal guidance and prophecies, please contact Prophet Ebenezer on WhatsApp at +233 55 882 4807 or follow him on TikTok @propheleben for daily inspiration!"
         };
 
         function toggleChat() {
@@ -406,28 +868,77 @@
             if (!message) return;
 
             const chatBody = document.getElementById('chatBody');
-            chatBody.innerHTML += `<p><strong>You:</strong> ${message}</p>`;
+            chatBody.innerHTML += `<p><strong>You:</strong> ${input.value}</p>`;
 
             setTimeout(() => {
                 let reply;
-                if (message.includes("hi") || message.includes("hello")) {
+                if (message.includes("hi") || message.includes("hello") || message.includes("greetings")) {
                     reply = responses["hello"];
-                } else if (message.includes("prayer")) {
+                } else if (message.includes("prayer") || message.includes("pray")) {
                     reply = responses["prayer"];
-                } else if (message.includes("service") || message.includes("time")) {
+                } else if (message.includes("service") || message.includes("time") || message.includes("when")) {
                     reply = responses["service"];
-                } else if (message.includes("who") || message.includes("prophet")) {
+                } else if (message.includes("who") || message.includes("prophet") || message.includes("about")) {
                     reply = responses["who"];
+                } else if (message.includes("bless") || message.includes("blessing")) {
+                    reply = responses["blessing"];
+                } else if (message.includes("help") || message.includes("assist")) {
+                    reply = responses["help"];
+                } else if (message.includes("prophecy") || message.includes("prophesy") || message.includes("reading")) {
+                    reply = responses["prophecy"];
+                } else if (message.includes("donate") || message.includes("donation") || message.includes("give")) {
+                    reply = responses["donate"];
+                } else if (message.includes("verse") || message.includes("bible") || message.includes("scripture")) {
+                    reply = responses["verse"];
                 } else {
                     reply = responses["default"];
                 }
-                chatBody.innerHTML += `<p><strong>Bot:</strong> ${reply}</p>`;
+                chatBody.innerHTML += `<p><strong>Prophet's Assistant:</strong> ${reply}</p>`;
                 chatBody.scrollTop = chatBody.scrollHeight;
             }, 1000);
 
             input.value = '';
             chatBody.scrollTop = chatBody.scrollHeight;
         }
+
+        // Allow Enter key to send message
+        document.getElementById('chatInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Allow Enter key to search verses
+        document.getElementById('verseSearch').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchVerse();
+            }
+        });
+
+        // Allow Enter key to submit prayer
+        document.getElementById('prayerInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                submitPrayer();
+            }
+        });
+
+        // Initialize all features when page loads
+        window.addEventListener('load', function() {
+            createParticles();
+            loadTheme();
+            
+            // Add scroll animations
+            const cards = document.querySelectorAll('.card');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'slideIn 0.8s ease forwards';
+                    }
+                });
+            });
+            
+            cards.forEach(card => observer.observe(card));
+        });
     </script>
 </body>
 </html>
