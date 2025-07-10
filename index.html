@@ -540,57 +540,6 @@
             animation: fadeInUp 0.8s ease-out;
         }
 
-        /* Mobile Menu Styles */
-        .mobile-menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--white);
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-
-        .mobile-menu-toggle:hover {
-            background: var(--glass);
-            color: var(--accent-gold);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--white);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a:hover {
-            color: var(--accent-gold);
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent-gold);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
         /* Mobile Optimizations */
         @media (max-width: 768px) {
             .hero-content {
@@ -598,115 +547,55 @@
             }
             
             .prophet-image {
-                width: 120px;
-                height: 120px;
-            }
-            
-            .hero-title {
-                font-size: clamp(2rem, 5vw, 3rem);
-            }
-            
-            .hero-subtitle {
-                font-size: clamp(1rem, 2.5vw, 1.2rem);
+                width: 150px;
+                height: 150px;
             }
             
             .nav {
-                padding: 0.8rem 1rem;
-            }
-            
-            .mobile-menu-toggle {
-                display: block;
+                padding: 1rem;
             }
             
             .nav-links {
-                position: fixed;
-                top: 70px;
-                left: 0;
-                right: 0;
-                background: var(--primary-800);
-                backdrop-filter: blur(20px);
-                border-bottom: 1px solid var(--glass-border);
-                flex-direction: column;
-                padding: 1.5rem;
-                gap: 1rem;
-                transform: translateY(-100%);
-                opacity: 0;
-                visibility: hidden;
-                transition: all 0.3s ease;
-                z-index: 998;
-            }
-            
-            .nav-links.active {
-                transform: translateY(0);
-                opacity: 1;
-                visibility: visible;
-            }
-            
-            .nav-links a {
-                font-size: 1.1rem;
-                padding: 0.8rem 0;
-                border-bottom: 1px solid var(--glass-border);
-            }
-            
-            .nav-links a:last-child {
-                border-bottom: none;
+                display: none;
             }
             
             .content {
-                padding: 1.5rem 1rem;
-            }
-            
-            .section {
-                margin-bottom: 3rem;
-            }
-            
-            .section-title {
-                font-size: clamp(1.8rem, 4vw, 2.5rem);
-                margin-bottom: 2rem;
+                padding: 2rem 1rem;
             }
             
             .cards-grid {
-                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                grid-template-columns: 1fr;
                 gap: 1rem;
             }
             
             .card {
-                padding: 1.2rem;
-                min-height: auto;
-            }
-            
-            .card-title {
-                font-size: 1.3rem;
-            }
-            
-            .card-description {
-                font-size: 0.95rem;
+                padding: 1.5rem;
             }
             
             .interactive-section {
-                padding: 1.5rem;
-                margin: 1.5rem 0;
+                padding: 2rem;
+                margin: 2rem 0;
             }
             
             .theme-toggle {
                 top: 1rem;
                 left: 1rem;
                 right: auto;
-                width: 40px;
-                height: 40px;
-                font-size: 1.1rem;
+                width: 45px;
+                height: 45px;
+                font-size: 1.2rem;
             }
             
             .testimonials-carousel {
-                height: 160px;
+                height: 180px;
             }
             
             .testimonial-slide {
-                padding: 1.2rem;
+                padding: 1.5rem;
             }
             
             .testimonial-text {
-                font-size: 0.95rem;
+                font-size: 1rem;
             }
             
             .testimonial-controls {
@@ -717,67 +606,6 @@
             .testimonial-btn {
                 padding: 0.4rem 0.8rem;
                 font-size: 0.8rem;
-            }
-            
-            /* Horizontal button layouts */
-            .btn {
-                padding: 0.6rem 1.2rem;
-                font-size: 0.9rem;
-            }
-            
-            /* Compact prayer cards */
-            .prayer-card {
-                padding: 1rem;
-            }
-            
-            .prayer-name {
-                font-size: 1rem;
-            }
-            
-            .prayer-content {
-                font-size: 0.9rem;
-            }
-            
-            /* Horizontal social links */
-            .social-links {
-                gap: 0.8rem;
-            }
-            
-            .social-link {
-                min-width: 45px;
-                height: 45px;
-                font-size: 1rem;
-            }
-            
-            /* Optimize quote section for mobile */
-            #quote-display {
-                font-size: 1rem;
-                padding: 1.5rem;
-            }
-            
-            /* Compact input groups */
-            .input-group {
-                margin-bottom: 1rem;
-            }
-            
-            .input {
-                padding: 0.8rem;
-                font-size: 0.95rem;
-            }
-            
-            /* Horizontal prayer footer */
-            .prayer-footer {
-                gap: 0.5rem;
-            }
-            
-            .prayer-support-btn {
-                padding: 0.4rem 0.8rem;
-                font-size: 0.85rem;
-            }
-            
-            .prayer-category {
-                padding: 0.25rem 0.6rem;
-                font-size: 0.75rem;
             }
         }
 
@@ -1332,8 +1160,7 @@
     <nav class="nav" id="nav">
         <div class="nav-container">
             <a href="#" class="logo">Prophet Ebenezer</a>
-            <button class="mobile-menu-toggle" id="mobileMenuToggle">☰</button>
-            <ul class="nav-links" id="navLinks">
+            <ul class="nav-links">
                 <li><a href="#about">About</a></li>
                 <li><a href="#ministry">Ministry</a></li>
                 <li><a href="#prayers">Prayers</a></li>
@@ -1353,7 +1180,7 @@
             </div>
             <h1 class="hero-title">Prophet Ebenezer Tetteh</h1>
             <p class="hero-subtitle">Bringing divine wisdom and spiritual guidance to transform lives across the globe</p>
-            <div style="display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; align-items: center;">
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
                 <a href="#ministry" class="btn">Discover Ministry</a>
                 <a href="#prayers" class="btn btn-secondary">Prayer Requests</a>
             </div>
@@ -2026,29 +1853,6 @@
             elements.forEach(element => observer.observe(element));
         }
 
-        // Mobile Menu Toggle
-        function toggleMobileMenu() {
-            const navLinks = document.getElementById('navLinks');
-            const menuToggle = document.getElementById('mobileMenuToggle');
-            
-            navLinks.classList.toggle('active');
-            
-            if (navLinks.classList.contains('active')) {
-                menuToggle.textContent = '✕';
-            } else {
-                menuToggle.textContent = '☰';
-            }
-        }
-
-        // Close mobile menu when clicking on a link
-        function closeMobileMenu() {
-            const navLinks = document.getElementById('navLinks');
-            const menuToggle = document.getElementById('mobileMenuToggle');
-            
-            navLinks.classList.remove('active');
-            menuToggle.textContent = '☰';
-        }
-
         // Initialize everything
         document.addEventListener('DOMContentLoaded', function() {
             createParticles();
@@ -2065,17 +1869,11 @@
             
             // Add event listeners
             document.getElementById('themeToggle').addEventListener('click', toggleTheme);
-            document.getElementById('mobileMenuToggle').addEventListener('click', toggleMobileMenu);
             document.getElementById('prayerInput').addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') submitPrayer();
             });
             document.getElementById('verseSearch').addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') searchVerse();
-            });
-            
-            // Close mobile menu when clicking on navigation links
-            document.querySelectorAll('.nav-links a').forEach(link => {
-                link.addEventListener('click', closeMobileMenu);
             });
         });
     </script>
